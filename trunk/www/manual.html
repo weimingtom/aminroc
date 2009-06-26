@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Roc 完全手册</title>
+<style>
+body,table,div,pre{font-size:14px;font-family: Arial;}
+#lastDate{margin-left:20px;}
+
+ol{margin-bottom:0px;}
+ol li ol{margin:0px;padding:0px 0px 20px 20px;}
+ol li ol li{font-weight:normal;}
+dt{font-weight:bold;margin-top:20px;}
+
+pre{margin:0px;}
+table td{white-space: pre;}
+
+.table1{border:1px solid #000;}
+.tr1{background-color:#EEE;}
+
+.blue{color:blue;}
+.blod{font-weight:bold;}
+.code{border:1px solid #000; width:500px; background-color:#eeefff; padding:10px; white-space:pre; margin:10px 0px 10px 0px;}
+</style>
+</head>
+<body>
+<h1>Amin Games Roc 完全手册</h1>
+<span id='lastDate'>文档日期：2009-06-12</span>
+<ol>
+  <li>介绍
+    <ol>
+      <li><a href='#1_1'>Amin Games Roc是什么?</a></li>
+      <li><a href='#1_2'>你可以从中获取的知识</a></li>
+      <li><a href='#1_3'>采用的开源协议</a></li>
+      <li><a href='#1_4'>商业许可</a></li>
+      <li><a href='#1_5'>Bug的提交与建议</a></li>
+    </ol>
+  </li>
+  <li>架构
+<ol>
+      <li><a href='#2_1'>框架结构</a></li>
+      <li><a href='#2_2'>文件组织结构(主要部分)</a></li>
+  </ol>
+  </li>
+  <li>部署
+    <ol>
+      <li><a href='#3_1'>客户端部署</a></li>
+      <li><a href='#3_2'>服务器部署</a></li>
+    </ol>
+  </li>
+  <li>开发
+	<ol>
+      <li><a href='#4_1'>游戏开发需求</a></li>
+      <li><a href='#4_2'>游戏测试调试</a></li>
+      <li><a href='#4_3'>快速部署游戏</a></li>
+    </ol>
+  </li>
+  <li>配置
+    <ol>
+      <li><a href='#5_1'>编译配置</a></li>
+      <li><a href='#5_2'>服务器配置</a></li>
+      <li><a href='#5_3'>客户端平台配置</a></li>
+    </ol>
+  </li>
+  <li>高级
+	  <ol>
+      <li><a href='#6_1'>安全验证机制</a></li>
+      <li><a href='#6_2'>Flash多方交互</a></li>
+      <li><a href='#6_3'>更多Make命令</a></li>
+    </ol>
+  </li>
+  <li>编外
+    <ol>
+      <li><a href='#7_1'>fla目录里的工程可读性</a></li>
+      <li><a href='#7_2'>C/C++服务器与flash通讯需要注意的问题</a></li>
+      <li><a href='#7_3'>服务器脚本的选择</a></li>
+      <li><a href='#7_4'>网络延时与同步</a></li>
+      <li><a href='#7_5'>Flash游戏开发注意事项</a></li>
+    </ol>
+  </li>
+  <li>链接
+    <ol>
+      <li>演示地址：<a href="http://www.aminlab.cn/Roc/">www.aminlab.cn/Roc</a></li>
+      <li>项目地址：<a href="http://code.google.com/p/aminroc/">http://code.google.com/p/aminroc/</a></li>
+      <li>下载地址：<a href=" http://code.google.com/p/aminroc/downloads/list#">http://code.google.com/p/aminroc/downloads/list#</a></li>
+      <li>最新文档：<a href="http://www.aminlab.cn/Roc/manual.html">www.aminlab.cn/Roc/manual.html</a></li>
+      <li>官方网站：<a href="http://www.aminlab.cn">www.aminlab.cn</a></li>
+    </ol>
+  </li>
+  <li>感谢(Thanks)
+  	<ol>
+    	<li><a href='#9_1'>Roc第三方库提供者</a></li>
+			<li><a href='#9_2'>Roc贡献人员</a></li>
+    </ol>
+  </li>
+</ol>
+<hr size="1"/>
+<dl>
+<dt id='1_1'>1.1 - Amin Games Roc是什么?</dt>
+<dd>
+<pre>Amin Games Roc是一个<span class="blue blod">B/S</span>游戏的开源项目(Open Source Project)。
+它是基于<span class="blue">房间制</span>的框架结构，拥有完整的服务器、Flash平台、Flash游戏三大部分的源代码。
+对于制作Flash多人在线游戏平台或应用具有一定参考的价值。</pre></dd>
+<dt id='1_2'>1.2 - 你可以从中获取的知识</dt>
+<dd>
+<pre>1、<span class="blue">服务器</span>：Roc的服务器用C++和lua编写的，可以在多种操作系统上的编译和运行，你可以从中了解到服务器的编写技术及跨平台的编译知识。
+2、<span class="blue">平台</span>：做为承上启下的作用，一个平台的好坏将影响整个架构的安全及稳定，你可以从中了解一些基础的平台设计及技巧。
+3、<span class="blue">游戏</span>：Roc外带了一款Bomber的演示游戏，在里面你可以了解到一些预测技术及网络同步的东西，这对你开发多人网络游戏将有一定帮助。
+</pre></dd>
+<dt id='1_3'>1.3 - 采用的开源协议</dt>
+<dd>
+<pre>Roc采用的授权协议是<span class="blue blod">GPLv3</span>开源协议(GNU General Public License v3)，其协议内容是：代码开源，允许使用者自由使用、修改、衍生开源的代码，
+但使用者修改或衍生后的作品必须要以同等的授权方式释出以回馈社群，禁止修改或衍生后的代码做为闭源的商业软件发布和销售，
+更多的详细信息请查阅相关文档。
+我必须在此先提出一个警告，如下：
+<font color='red'>请勿擅自把Roc及其修改或衍生后的产品应用于商业上，这样会使你陷入不可评估的法律风险中，请谨慎。</font>
+</pre></dd>
+<dt id='1_4'>1.4 - 商业许可</dt>
+<dd>如果你需要应用Roc及修改或衍生后的产品在商业上，则需要购买Roc的商业许可，请与我联系。</dd>
+<dt id='1_5'>1.5 - Bug的提交与建议</dt>
+<dd>提交地址：<a href="http://code.google.com/p/aminroc/issues/list">http://code.google.com/p/aminroc/issues/list</a><br />
+也可以直接发E-mail给我：<a href="mailto:aminlab@qq.com">aminlab@qq.com</a></dd>
+<dt id='2_1'>2.1 - 框架结构</dt>
+<dd><a href="http://aminlab.cn/api/link.asp?id=1" target="_blank"><img src='http://aminlab.cn/api/img.asp?id=1' border="0"/></a></dd>
+<dt id='2_2'>2.2 - 文件组织结构(主要部分)</dt>
+<dd><br />
+<table class="table1" border="0" cellspacing="1" cellpadding="3">
+    <tr class="tr1">
+      <td width="200" class="blod">- bin</td>
+      <td width="310"><span class="blue">[生成]</span>服务器文件夹</td>
+    </tr>
+    <tr>
+      <td>    - config.xml</td>
+      <td>服务器配置文件</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - policy.xml</td>
+      <td>Flash策略文件</td>
+    </tr>
+    <tr>
+      <td>    - Roc.exe</td>
+      <td>服务器执行文件(Windows)</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - Roc.bin</td>
+      <td>服务器执行文件(linux或FreeBSD，需自行编译)</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr class="tr1">
+      <td class="blod">- cpp</td>
+      <td><span class="blue">[源码]</span>服务器文件夹</td>
+    </tr>
+    <tr>
+      <td>    - com</td>
+      <td>通用库文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - al</td>
+      <td>AminLab库文件夹</td>
+    </tr>
+    <tr>
+      <td>        - lua5.1.4</td>
+      <td>Lua库文件夹(MIT开源许可)</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - tinyxml2.5.3</td>
+      <td>TinyXml库文件夹(zlib/libpng开源许可)</td>
+    </tr>
+    <tr>
+      <td>    - def</td>
+      <td>定义文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - src</td>
+      <td>源码文件夹</td>
+    </tr>
+	<tr>
+      <td>        - main.cpp</td>
+      <td>服务器首源文件</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - tmp</td>
+      <td>编译文件临时存放文件夹</td>
+    </tr>
+    <tr>
+      <td>    - Makefile</td>
+      <td>用在linux、FreeBSD下编译的工程文件</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - Roc.vcproj:Visual</td>
+      <td>用在windows下编译的工程文件(Studdio 2005)</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr class="tr1">
+      <td class="blod">- fla</td>
+      <td><span class="blue">[源码]</span>客户端文件夹</td>
+    </tr>
+    <tr>
+      <td>    - games</td>
+      <td>游戏文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - TestDemo</td>
+      <td>测试示例文件夹</td>
+    </tr>
+    <tr>
+      <td>            - src</td>
+      <td>测试示例文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>                - TestDemo.as</td>
+      <td>游戏首源文件</td>
+    </tr>
+    <tr>
+      <td>        - Bomber</td>
+      <td>Bomber文件夹(外带，仅供参考)</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - keys</td>
+      <td>钥匙文件夹</td>
+    </tr>
+    <tr>
+      <td>    - platform</td>
+      <td>Roc平台文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - __def</td>
+      <td>定义文件夹</td>
+    </tr>
+    <tr>
+      <td>        - __src</td>
+      <td>源码文件夹</td>
+    </tr>
+        <tr class="tr1">
+      <td>            - Platform.as</td>
+      <td>平台首源文件</td>
+    </tr>
+    <tr>
+      <td>            - InitScene.as</td>
+      <td>初始化场景</td>
+    </tr>
+        <tr class="tr1">
+      <td>            - ZoneScene.as</td>
+      <td>空间场景</td>
+    </tr>
+    <tr>
+      <td>            - TeamScene.as</td>
+      <td>队伍场景</td>
+    </tr>
+    <tr  class="tr1">
+      <td>            - GameScene.as</td>
+      <td>游戏场景</td>
+    </tr>
+    <tr>
+      <td>        - ui</td>
+      <td>UI文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - com</td>
+      <td>通用库文件夹</td>
+    </tr>
+    <tr>
+      <td>            - al</td>
+      <td>AminLab的库文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>        - T</td>
+      <td>平台游戏开发包</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr class="tr1">
+      <td class="blod">- lua</td>
+      <td><span class="blue">[源码]</span>服务器脚本文件夹</td>
+    </tr>
+    <tr>
+      <td>    - com</td>
+      <td>通用库文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - def</td>
+      <td>定义文件夹</td>
+    </tr>
+    <tr>
+      <td>    - keys</td>
+      <td>钥匙文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - src</td>
+      <td>源码文件夹</td>
+    </tr>
+    <tr>
+      <td>        - tree</td>
+      <td>数据结构文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>            - Node.lua</td>
+      <td>数据结点基类</td>
+    </tr>
+	<tr>
+      <td>    - config.lua</td>
+      <td>服务器数据结构配置</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - index.lua</td>
+      <td>脚本首源文件</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr class="tr1">
+      <td class="blod">- www</td>
+      <td><span class="blue">[生成]</span>客户端文件夹</td>
+    </tr>
+    <tr>
+      <td>    - games</td>
+      <td>存放游戏文件</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - infos</td>
+      <td>用户信息文件夹</td>
+    </tr>
+    <tr>
+      <td>    - keys </td>
+      <td>钥匙文件夹</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - index.html</td>
+      <td>默认页</td>
+    </tr>
+    <tr>
+      <td>    - play.html</td>
+      <td>游戏页(配置平台接口)</td>
+    </tr>
+    <tr class="tr1">
+      <td>    - platform.swf</td>
+      <td>平台文件</td>
+    </tr>
+  </table>
+</dd>
+<dt id='3_1'>3.1 - 客户端部署</dt>
+<dd>
+  <pre>Roc的客户端支持三种类型的Web服务器：ASP服务器、PHP服务器和JSP服务器。
+将Web服务器的目录指向www目录即可，访问地址为：http://localhost/index.html
+如果你想扩展支持额外的Web服务器类型，请参考index.html的<span class="blod">智能识别函数</span>以及在www/infos目录下创建你的相关处理文件。
+<span class="blue">注：可能某些在支持列表中的Web服务器不能识别出来，请手动在index.html中修改url变量(具体请查看index.html里的说明)。
+</span></pre></dd>
+<dt id='3_2'>3.2 - 服务器部署</dt>
+<dd>
+  <pre>Roc的服务器目前支持在三种操作系统上的编译和运行，分别为<span class="blue">windows</span>、<span class="blue">linux</span>、<span class="blue">FreeBSD</span>，对应的高级socket技术分别是<span class="blue">IOCP</span>、<span class="blue">epoll(LT)</span>、<span class="blue">kqueue</span>.
+windows下的编译需安装Visual Studio 2005或以上版本，然后打开cpp目录下的Roc.vcproj工程文件进行编译即可，
+编译生成后的文件存放在bin目录下，名字为Roc.exe，双击运行即可。
+linux,FreeBSD下的编译需安装gcc、g++编译器(最新版本即可)，在终端窗口里进入cpp目录，输入make linux或make FreeBSD命令编译即可，
+编译生成后的文件存放在bin目录下，名字为Roc.bin，在终端窗口中转到bin目录下输入./Roc.bin回车运行即可。
+<span class="blue">注：1、在装有sudo工具的系统上监听1024或以下端口时将会失败，所以必须键入sudo ./Roc.bin来执行程序。
+　　2、在linux下编译时内核必须在2.6.17或以上版本以确定新的epoll事件能够使用，可用uname -r查询本地linux内核版本。
+　　3、在FreeBSD下编译时请确定你的make工具是GNU make(gmake)</span></pre></dd>
+<dt id='4_1'>4.1 - 游戏开发需求</dt>
+<dd>
+  <pre>基于Roc平台上的游戏需要加入一个as3的开发类包，类包是fla/platform目录下的T类包。
+T类包包括以下四个文件:
+
+</pre>
+  <table class="table1" width="300" border="0" cellpadding="3" cellspacing="1">
+    <tr class="tr1">
+      <td>TEmbed.as</td>
+      <td>用来调用Roc平台的API</td>
+    </tr>
+    <tr>
+      <td>TError.as</td>
+      <td>错误事件类型</td>
+    </tr>
+    <tr class="tr1">
+      <td>TEvent.as</td>
+      <td>Roc平台发出的事件</td>
+    </tr>
+    <tr>
+      <td>TUser.as</td>
+      <td>Roc平台的用户结构</td>
+    </tr>
+  </table>
+<pre>
+  
+请将此包复制到你游戏工程文件夹下，<span class="blue">具体的使用方法</span>请参考fla/games/TestDemo工程，里面已经有完整注解和使用方法。</pre>
+</dd>
+<dt id='4_2'>4.2 - 游戏测试调试</dt>
+<dd>
+  <pre>T类包中包含了一个本地模拟测试环境，只要你的游戏一生成就可以进行一些基本的模拟测试，如果想进行真实环境测试请将其部署到平台下。
+在真实环境测试中如果想快速调试的话，需先将Roc项目设为Flash本地受信任文件夹，在
+C:\Documents and Settings\[用户文件夹]\Application Data\Macromedia\Flash Player\#Security\FlashPlayerTrust文件夹里新建一个TrustFiles.txt文档，
+输入Roc项目所在的路径保存即可，然后打开fla/platform/__src/InitScene.as文件，你可以找到以下内容</pre>
+<div class="code"><table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="300">if(Security.sandboxType == 'localTrusted'){</td>
+    <td width="150">//[本地调试模式] </td>
+  </tr>
+  <tr>
+    <td>    params.navigation = '/'; </td>
+    <td>// 导航地址 </td>
+  </tr>
+  <tr>
+    <td>    params.key = 'keys/090427.swf';</td>
+    <td>// 钥匙文件 </td>
+  </tr>
+  <tr>
+    <td>    params.server = '127.0.0.1'; </td>
+    <td>// 服务器地址</td>
+  </tr>
+  <tr>
+    <td>    params.port = 1985;</td>
+    <td>// 游戏端口</td>
+  </tr>
+  <tr>
+    <td>    params.policyPort = 843; </td>
+    <td>// 策略端口</td>
+  </tr>
+  <tr>
+    <td>    params.path = 'games';</td>
+    <td>// 游戏资源目录</td>
+  </tr>
+  <tr>
+    <td>    params.game = 'TestDemo';</td>
+    <td>// 游戏文件</td>
+  </tr>
+  <tr>
+    <td>    params.info = 'infos/user.txt';</td>
+    <td>// 用户信息文件</td>
+  </tr>
+  <tr>
+    <td>}</td>
+    <td>&nbsp;</td>
+  </tr>
+</table></div>
+按需修改、保存、编译之后可以直接执行www/platform.swf进行调试了。</dd>
+<dt id='4_3'>4.3 - 快速部署游戏</dt>
+<dd>
+  <pre>当游戏开发完之后，请其发布到www/games/目录下，
+
+然后用<span class="blue">记事本</span>打开www目录下的index.html文件，你可以找到以下内容</pre>
+  <div class="code">&lt;li&gt;Test Demo(测试示例)<br />&lt;div&gt;<br />－ &lt;a href=&quot;javascript:play('TestDemo')&quot;&gt;匿名登入&lt;/a&gt;&lt;br&gt;<br />－ &lt;a href=&quot;javascript:play('TestDemo','name')&quot;&gt;昵称登入&lt;/a&gt;&lt;br&gt;<br />－ &lt;a href=&quot;javascript:play('TestDemo','auto')&quot;&gt;自动登入&lt;/a&gt;<br />&lt;/div&gt;<br />&lt;/li&gt;</div>
+<pre>复制一份TestDemo的代码块增加到其下面，并修改其中所有play函数的第一个参数为你的<span class="blue">游戏文件名</span>。
+
+接下来再用<span class="blue">记事本</span>打开lua目录下的config.lua文件，你可以看到以下内容</pre>
+<div class="code"><table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="180">['TestDemo'] = {</td>
+    <td width="120">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>    maxOnline = 1000,</td>
+    <td>-- 最多在线人数</td>
+  </tr>
+  <tr>
+    <td>    maxTeam = 99,</td>
+    <td>-- 最多可用队伍</td>
+  </tr>
+  <tr>
+    <td>    minUserForTeam = 2,</td>
+    <td>-- 最少游戏人数</td>
+  </tr>
+  <tr>
+    <td>    maxUserForTeam = 8,</td>
+    <td>-- 最多游戏人数 </td>
+  </tr>
+  <tr>
+    <td>},</td>
+    <td>&nbsp;</td>
+  </tr>
+</table></div>
+<pre>复制一份TestDemo的代码块增加到其下面，并按自己的需求修改其配置属性。
+最后重启服务器，浏览http://localhost/index.html点击进入你的游戏即可。
+</pre></dd>
+<dt id='5_1'>5.1 - 编译配置</dt>
+<dd><pre>如果你要配置windows下的编译，那使用Visual Studio 2005及以上版本打开后进行配置，
+如果你要配置Linux、FreeBSD下的编译，那<span class="blue">记事本</span>打Makefile文件，看里面的注解按需配置。
+</pre></dd>
+<dt id='5_2'>5.2 - 服务器配置</dt>
+<dd>
+  <pre>服务器的配置存在bin目录下的config.xml，
+逻辑处理配置存在lua目录下的congif.lua，
+相关说明已经注解在文档中，可参阅后按需配置。</pre></dd>
+<dt id='5_3'>5.3 - 客户端平台配置</dt>
+<dd>
+<pre>客户端平台的配置存在www目录下的play.html，用<span class="blue">记事本</span>打开文件你可以找到以下内容</pre>
+<div class="code"><table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="240">// 平台参数</td>
+    <td width="224">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>var params = [ </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>    &quot;navigation=&quot; + nav,</td>
+    <td>// 导航地址</td>
+  </tr>
+  <tr>
+    <td>    &quot;server=&quot; + location.hostname,</td>
+    <td>// 服务器地址(当前所处主机地址)</td>
+  </tr>
+  <tr>
+    <td>    &quot;port=1985&quot;,</td>
+    <td>// 游戏端口</td>
+  </tr>
+  <tr>
+    <td>    &quot;policyPort=843&quot;,</td>
+    <td>// 策略端口(默认且推荐843端口)</td>
+  </tr>
+  <tr>
+    <td>    &quot;path=games&quot;,</td>
+    <td>// 游戏资源目录</td>
+  </tr>
+  <tr>
+    <td>    &quot;key=keys/090427.swf&quot;,</td>
+    <td>// 钥匙文件</td>
+  </tr>
+  <tr>
+    <td>    &quot;info=&quot;+getCookie('info'),</td>
+    <td>// 用户信息文件地址</td>
+  </tr>
+  <tr>
+    <td>    &quot;game=&quot;+getCookie('game'),</td>
+    <td>// 游戏文件</td>
+  </tr>
+  <tr>
+    <td>    &quot;auto=&quot;+getCookie('auto'),</td>
+    <td>// 是否自动登入</td>
+  </tr>
+  <tr>
+    <td>];</td>
+    <td>&nbsp;</td>
+  </tr>
+</table></div>
+<pre>如果你想制作自己的play.html文件，可参阅后自行制作。</pre></dd>
+<dt id='6_1'>6.1 - 安全验证机制</dt>
+<dd>
+<pre>Roc的安全机制主要是防止非法连接的进入(如外挂)，你可以会发现fla、www、lua三个目录都有一个keys文件夹，三者的关系分别是：
+fla\keys里的文件是用来生成钥匙的；
+www\keys里的文件是生成好的钥匙文件；
+lua\keys里的文件是来产生明密文的；
+验证的流程是这样的：用户通过平台访问服务器，服务器生成一个明文和一个密文，同时将密文发往用户处解密，用户平台将会加载key参数指定的
+钥匙文件，然后通过此文件解密回送明文给服务器，服务器将收到的明文与之前生成的明文进行对比，然后处理最终结果。
+这个验证机制如验证码一样，但不同之处在于它是后台处理的，用户不用去操作，体验更好，
+且它比验证码更为复杂和安全，你可以将钥匙、加解密算法指定为随机生成，生成的文件再进行二次加密等。
+而且最重要的是能更方便地帮你找到非法连接的帐号，因为验证码输入是容许用户输错的，而这套验证机制正常流程下是不会出错的，
+发生错误的帐号将是有问题的。
+</pre></dd>
+<dt id='6_2'>6.2 - Flash的多方交互</dt>
+<dd>
+  <pre>可能你会注意到平台的info参数，没错，它就是用来读取当前登陆的Web服务器的用户信息，为什么不从游戏服务器读取呢，要多此步骤干吗?
+我的设计是Flash跟游戏服务器交互也跟Web服务器交互，这样形成一个多方交互的体系以适应B/S的架构和部署。
+</pre></dd>
+<dt id='6_3'>6.3 - 更多Make命令</dt>
+<dd><pre>cpp目录下的Make支持额外的命令如下：
+    make clean  - 删除cpp/temp目录下的临时文件
+    make run  - 执行bin目录的Roc.bin
+</pre></dd>
+<dt id='7_1'>7.1 - fla目录里的工程可读性</dt>
+<dd>
+  <pre>虽然fla目录里的工程全是flash cs4的，但你完全可以把它加到flex(flash builder)中去编写(添加到Flex Build Path里)，全部代码无错误及警告。</pre></dd>
+<dt id='7_2'>7.2 - C/C++服务器与flash通讯需要注意的问题</dt>
+<dd>
+  <pre>flash的socket在接收XML数据时是以\0做为结束标识符。
+很好，C的字符串也是以\0做结束标识符，直接发过去不就行了，你有可能会写这样一段代码：send(socket,buf,strlen(buf),0);
+那么恭喜你，客户端将会永远不响应你，因为strlen不把\0计算在内。这个问题会出现在策略请求和XMLSocket上请注意。
+另外在flash player 10的时候你设置System.useCodePage不会对XMLSocket产生作用，推荐使用Socket类。</pre></dd>
+<dt id='7_3'>7.3 - 服务器脚本的选择</dt>
+<dd>
+  <pre>我倾向的两个选择：Python和Lua，这两个脚本都与C/C++结合的很不错。
+Python是拥有庞大的第三类库，而且.net和java都有相应编译器，无耐就是性能差点(Python3000据说快很多，这个还没试过)
+Lua是性能一流的脚本，但相对Python来说类库还是很少，且目前也只有C的版本，其他语言只能望洋兴叹了。
+脚本这个东西见仁见智，适用最好。</pre></dd>
+<dt id='7_4'>7.4 - 网络延时与同步</dt>
+<dd>
+  <pre>在中国的网络环境里，同步问题更为关心，而且Flash目前也只支持TCP通讯(UDP虽然有了但没有开放)，
+你可以看到TEvent里有一个delay参数是为同步游戏提供，虽然它不太精准，但还是帮得上忙。
+如果你想在Roc平台上开发一款ARPG的MMO游戏，那你现在可以取消这个念头;
+如果你想在Roc平台上开发一款类似我写的Bomber的游戏，那还是有希望的，可以参考下Bomber。
+</pre></dd>
+<dt id='7_5'>7.5 - Flash游戏开发注意事项</dt>
+<dd>
+  <pre>你写过C吗？OK，有过，那你应该知道malloc和free的重要性，没错，搞不好就是内存泄露。
+不过后来出现的语言都号称是内存泄露的救世主，as3也名列其中。但对一些人来说将可能是恶梦的开始。
+GC(garbage collection)，垃圾回收，天使的微笑。
+打个比方：你或许会很高兴你吃了东西有人帮你收拾，但问题如果你不知那人什么情况下过来收拾，那你将被你所扔的垃圾所淹灭了。
+GC就是这个人，你不断地创建对象而不知GC怎么回收的话，那有可能你的游戏将占用更多的内存直至运行不了。
+我在这要说的只有两点：
+ 
+1、在as3中任何调用了addEventListener的地方都要有相应的removeEventListener的处理
+2、在as3中任何调用了setTimeout或setInterval的地方都要有相应的clearTimeout和clearInterval的处理
+
+更多关于GC的内容请查阅其他相关文档。</pre></dd>
+<dt id='9_1'>9.1 - Roc第三方库提供者</dt>
+<dd>
+  <pre>
+tinyxml2.5.3 - <span class="blue">Lee Thomason</span>
+http://sourceforge.net/projects/tinyxml
+lua5.1.4 - <span class="blue">Roberto Ierusalimschy、Waldemar Celes、Luiz Henrique de Figueiredo</span>
+http://www.lua.org/</pre></dd>
+<dt id='9_2'>9.2 - Roc贡献人员</dt>
+<dd>感谢<span class="blue">kids.lee</span>提交若干Bug及js_unescape函数。</dd>
+</dl>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+</body>
+</html>

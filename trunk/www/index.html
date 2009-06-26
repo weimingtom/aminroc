@@ -1,0 +1,91 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Roc - Developed By Amin Lab</title>
+<style>
+body{margin:0px; height:100%; font-size:12px; background-color:#336699}
+div{font-family:"Times New Roman";}
+
+#main{text-align:left; width:100%; padding-bottom:20px; background-color:#036;}
+#topic{color:#369; padding:15px 15px 0px 15px;font-size:20px;font-weight:bold}
+
+#DevelopedBy{font-size:12px; padding-left:10px;}
+#DevelopedBy a{color:#369;text-decoration:underline;}
+#DevelopedBy a:hover{color:#CF9;}
+
+dt{margin:20px 0px 0px 40px;color:#0F0;}
+dd{color:white;}
+dd a{line-height:18px;color:white;}
+dd a:hover{color:#CF9;}
+
+li{color:#CF9;}
+</style>
+<script>
+// 是否本地运行
+if(document.location.protocol == 'http:'){getHttpHeader();}
+else{alert('请从Web服务器端访问,无法在本地模式下运行.');}
+
+// 获取info的地址
+var url = 'infos/user.asp'; // 无法识别Web服务器地址的话请手动修改变量的值
+// 智能识别Web服务器类型
+function getHttpHeader(){var _hh={DevelopedBy:'asp'};var _xhr=window.ActiveXObject?new ActiveXObject("Microsoft.XMLHTTP"):new XMLHttpRequest();_xhr.onreadystatechange=function(){if(_xhr.readyState==4){if(_xhr.status==404){var header=_xhr.getAllResponseHeaders();
+/* ASP服务器 */
+if(header.search(/iis/gi)!=-1||header.search(/asp|iis/gi)!=-1){url='infos/user.asp';}
+/* PHP服务器 */
+else if(header.search(/php/gi)!=-1){url='infos/user.php';}
+/* JSP服务器 */
+else if(header.search(/jsp/gi)!=-1||header.search(/tomcat/gi)!=-1){url='infos/user.jsp';}}}};
+// 发送识别请求
+_xhr.open("GET",'__getHttpHeader',true);_xhr.send(null);return _hh;}
+// cookie函数
+function setCookie(name,value){var Days = 7;var exp  = new Date();exp.setTime(exp.getTime() + Days*24*60*60*1000);document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();}
+function getCookie(name){var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));if(arr != null) return unescape(arr[2]); return 0;}
+function delCookie(name){var exp = new Date();exp.setTime(exp.getTime() - 1);var cval=getCookie(name);if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();}
+// 处理函数
+function play(game,ext){
+delCookie('auto');delCookie('nickname');
+if(ext == 'name'){for(;;){var nickname = prompt('请输入一个你喜欢的游戏昵称(10字内)','');if(nickname){if(nickname.length > 10){alert('名字太长,请重新输入!');continue;}setCookie('nickname',nickname);break;}else{return;}}}
+else if(ext == 'auto'){setCookie('auto',1);}
+setCookie('info',url+'?get=1');setCookie('game',game);location.href=url;
+}
+</script>
+</head>
+<body>
+  <div id='main'>
+  	<div id='topic'>Amin Games Roc
+    	<span id='DevelopedBy'>- Developed By <a href="http://www.aminlab.cn">Amin Lab</a></span>
+    </div>
+    <dl>
+      <dt>游戏前需知！！！</dt>
+      <dd>
+        　　1、Roc是基于房间制的结构，你可以选择加入别人的队伍，也可以自己创建队伍，<br>
+        如果你不想等待别人的话，<h3>可以自己再开一个游戏窗口加入自己创建的队伍！</h3>
+        　　<h1>2、准备请点击凸出的绿勾按钮，队伍里的人全部准备完后就可以开始游戏了。</h1><br>
+        　　3、如果你觉得网络卡的话，可以下载源码部署在本地，非常简单，部署前请查看<br> 
+        完全手册。<br>
+        　　附：<a href="manual.html">Roc完全手册</a>(开发或部署所用)<br>
+        　　注：如果你有什么想留言，请到<a href="http://aminlab.cn/msg.html">留言本</a>上留言</dd>
+      <dt>游戏列表</dt>
+      <dd>
+        <ol>
+          <li>Bomber(泡泡堂)
+            <div>
+            － <a href="javascript:play('Bomber')">普通登入(推荐)</a><br>
+            － <a href="javascript:play('Bomber','name')">昵称登入</a><br>
+            － <a href="javascript:play('Bomber','auto')">自动登入</a>
+            </div>
+          </li>
+          <br>
+          <li>Test Demo(基础演示示例)
+            <div>
+            － <a href="javascript:play('TestDemo')">普通登入(推荐)</a><br>
+            － <a href="javascript:play('TestDemo','name')">昵称登入</a><br>
+            － <a href="javascript:play('TestDemo','auto')">自动登入</a>
+            </div>
+          </li>
+        </ol>
+       </dd>
+     </dl>
+  </div>
+</body>
+</html>
