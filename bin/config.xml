@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gb2312"?>
+<root>
+  <!-- (文件)策略 -->
+  <PolicyFile>policy.xml</PolicyFile>
+  <!-- (文件)处理逻辑 -->
+  <LuaFile>../lua/index.lua</LuaFile>
+  <!-- (文件)日志 -->
+  <LogFile>log.txt</LogFile>
+  <!-- (端口)游戏 -->
+  <GamePort>1985</GamePort>
+  <!-- (端口)策略 -->
+  <PolicyPort>843</PolicyPort>
+  <!-- (级别)日志 -->
+  <LogLevel>3</LogLevel>
+</root>
